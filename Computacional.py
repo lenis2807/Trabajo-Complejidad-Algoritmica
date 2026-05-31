@@ -191,7 +191,7 @@ def buttonCifrar():
     else:
         print("uno de los numeros no es primo")
 
-    
+            
 
 def button_function2(cadena):
     descifrar_texto(cadena)

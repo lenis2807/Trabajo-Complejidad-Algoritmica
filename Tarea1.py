@@ -1,4 +1,4 @@
-arreglo = [3, 3, 0]
+arreglo = [3, 3, 0] 
 misioneros = arreglo[0]
 canibales = arreglo[1]
 
@@ -17,34 +17,38 @@ canibales = arreglo[1]
 
     #me quede hasta acá        
 
-
+estados = [0, 0, 0, 0, 0, 0] 
 #Algoritmo por fuerza bruta
-estados = [0, 0, 0, 0, 0, 0]
-for queries in range(64):
-    for i in range(len(estados)):
-        for j in range(len(estados)):
-           for k in range(len(estados)):
-               for l in range(len(estados)):
-                   for m in range(len(estados)):
-                       for n in range(len(estados)):
-                            if (i == j):
-                              pass
-                            estados[i] = 0
-                            estados[j] = 1
+estados = [0, 0, 0]
+for queries in range(32):
+    for i in range(0,4,1):
+        for j in range(0,4,1):
+            for k in [0,1]:
 
-                            M_ceros = sum(1 for i in estados[0:3] if i == 0)  #cantidad de 0
-                            M_izquierda = sum(1 for i in estados[0:3] if i == 1)#cantidad de 1
-            
-                            C_ceros = sum(1 for i in estados[3:6] if i == 0) #cantidad de 0
-                            C_izquierda = sum(1 for i in estados[3:6] if i == 1) #cantidad de 1
-            
-            
-                            if (M_ceros > 0 and C_izquierda > M_izquierda):
-                                print(estados, "No valido")
-                            if (M_izquierda > 0 and C_ceros > M_ceros):
-                                print(estados, "No valido")     
-                            else:
-                                print(estados, "Valido") 
-           
+                estados = [i, j, k]
 
+                M_orillaA = sum(1 for i in estados[0:3] if i == 0)  #cantidad de 0
+                M_orillaB = sum(1 for i in estados[0:3] if i == 1)#cantidad de 1
             
+                C_orillaA = sum(1 for i in estados[3:6] if i == 0) #cantidad de 0
+                C_orillaB = sum(1 for i in estados[3:6] if i == 1) #cantidad de 1
+            
+                #if (M_orillaA > 0 and C_orillaB > M_orillaA):
+                    #print(estados, "No valido")
+                #if (M_orillaA > 0 and C_orillaB > M_orillaA):
+                    #print(estados, "No valido")     
+                #else:
+                   # print(estados, "Valido")
+
+
+
+for M in range(4):
+    for C in range(4):
+        for b in [0,1]:
+            estados = [M, C, b]
+            m_b = 3-M #orilla b    [2, 3, 1]  3-2 = 1 M     3-3=0 C
+            c_b = 3-C
+            if (M==0 or M>=C)and(m_b == 0 or m_b >=c_b):
+                print(estados, "Valido")
+            else:
+                print(estados, "No valido")
