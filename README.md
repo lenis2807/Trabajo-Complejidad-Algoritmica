@@ -1,9 +1,12 @@
-TRABAJO REALIZADO POR :
+# Proyecto de Complejidad Algoritmica
+**En constante trabajo**
 
-Lenis Jazid Jauregui Matos
-Adriana Nicole Ramos Fuentes Rivera
-Addy Pineda Saldaña
-Joseph Calderon Mendoza
 
-CURSO: COMPLEJIDAD ALGORITMICA
-AÑO: 2026
+## Autores y créditos
+* **Adriana Nicole Ramos Fuentes Rivera**
+* **Joseph Calderon Mendoza**
+* **Addy Pineda Saldaña**
+* **Lenis Jauregui**
+
+---
+*Año : 2026*
