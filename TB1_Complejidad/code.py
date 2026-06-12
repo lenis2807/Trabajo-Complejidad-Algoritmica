@@ -33,22 +33,30 @@ TENER EN CUENTA QUE ES UN DATASET DE 3000 NODOS, NO SE PREOCUPE SI SE DEMORA EN 
 '''
 
 
+
+# ============================================================  
+# SECCIÓN 1: IMPORTACIONES  # Esta parte carga módulos de Python necesarios para el desarrollo del código
+# ============================================================  
 import os
 import heapq 
 import pandas as pd 
 import networkx as nx
 import matplotlib.pyplot as plt 
 
-#ruta para leer el archivo de kagglehub
-#path = kagglehub.dataset_download("adriana14852/airports-distances-and-others")
 
-#ruta para leer el archivo ya descargado 
+
 
 '''
 ***************************************************************************************************
 '''
-#Estas variables será global para evitar la redundancia de estar escribiendo de nuevo la ruta
-ruta = "TB1_Complejidad/complete_airport_flight_network_dataset.csv"
+# ============================================================  
+# SECCIÓN 2: VARIABLES GLOBALES #configuración de variables necesarias para el programa
+# ============================================================  
+
+#ruta para leer el archivo de kagglehub
+#ruta = kagglehub.dataset_download("adriana14852/airports-distances-and-others")
+
+ruta = "complete_airport_flight_network_dataset.csv"
 df = pd.read_csv(ruta) #leemos el archivo con la libreria Pandas 
 
 G = nx.Graph() #leemos el grafo con el nx
@@ -60,6 +68,9 @@ G = nx.from_pandas_edgelist(df, source="origin_airport_id", target="destination_
 '''
 
 
+# ============================================================  
+# SECCIÓN 3: Impresión de grafo normal #Se imprime el grafo a evaluar
+# ============================================================  
 
 def imprimirGrafoNormal(): #funcion para imprimir el grafo
     '''
@@ -92,6 +103,11 @@ def imprimirGrafoNormal(): #funcion para imprimir el grafo
     plt.show() #mostramos el grafo
 
 
+
+
+# ============================================================  
+# SECCIÓN 4: DESARROLLO DE ALGORITMOS A USAR  #En está parte desarrollamos y justificamos el desarrollo de los algoritmos a usar
+# ============================================================  
 def algoritmoDikjstra(grafo, inicio, destino): 
     '''
     ***************************************************************************************************
@@ -248,15 +264,13 @@ def IDDFS(grafo, inicio, destino, limite):
 
     return None #si no hemos encontrado nada retornamos None (Null)
 
-    
 
+
+# ============================================================  
+# SECCIÓN 5: GRAFICOS RESULTANTES #funciones que muestran el gráfico resultante 
+# ============================================================  
 def graficarDijsktra(grafo, camino): #creamos una funcion para graficar el algoritmo de dijkstra
-    '''
-    ***************************************************************************************************
-    CON ESTA FUNCION GRAFICAREMOS LA FUNCION DE DIJKSTRA
-    ***************************************************************************************************
-    '''
-
+ 
     plt.figure(figsize=(15,10)) #colocamos el tamaño de nuestra pantalla
     pos = nx.spring_layout(G, k=0.5, seed=42) #configuramos el spring 
 
@@ -287,6 +301,23 @@ def graficarDijsktra(grafo, camino): #creamos una funcion para graficar el algor
     plt.tight_layout() #para los margenes
     plt.show() #mostramos el grafo
  
+ 
+def graficarIDDFS(camino):
+    G_camino = nx.DiGraph()
+
+    edges = [(camino[i], camino[i+1]) for i in range(len(camino)-1)]
+    G_camino.add_edges_from(edges)
+ 
+    plt.figure(figsize=(10,6))
+    pos = nx.spring_layout(G_camino, seed=42)
+    nx.draw_networkx_nodes(G_camino, pos, node_color='tomato', node_size=700)
+    nx.draw_networkx_edges(G_camino, pos, edge_color='gray', width=2, arrowsize=20)
+    nx.draw_networkx_labels(G_camino, pos, font_size=12, font_family='sans-serif', font_weight='bold')
+    
+    plt.title("Ruta Óptima Encontrada por IDDFS", fontsize=14, fontweight='bold')
+    plt.axis('off')
+    plt.show()
+
 
 def main():
     '''
@@ -322,7 +353,7 @@ def main():
                 if resultado is not None: #si el resultado si tiene ALGO que mostrar
                     costo_minimo, camino = resultado #separamos los elementos de costo minimo y el camino encontrado
 
-                    print(f"\nCamino: {camino}") #imprimimos el costo minimo :v
+                    print(f"\nCamino: {camino}") #imprimimos el camino encontrado :v
                     
                     print("Cargando ... ")
                     graficarDijsktra(G, camino)
@@ -330,9 +361,22 @@ def main():
                 else: #si el resultado es vacio (no hay nada ... :c)
                     print("Lo siento papu, no podras salir de tu choza")
 
+        if opcion == "3":
+            inicio = int(input("INGRESE SU AEROPUERTO DE INICIO: "))
+            destino = int(input("INGRESE SU AEROPUERTO DE DESTINO: "))
+            escalas = int(input("INGRESE EL LIMITE DE ESCALAS: "))
+            if inicio in G and destino in G:  #verificamos que el inicio y el destino esten en el grafo G
+                resultado = IDDFS(G, inicio, destino, escalas) #resultado almacena el algoritmo IDDFS para las escalas
+
+                if resultado is not None: #si el resultado si tiene ALGO que mostrar
+                    print("cargando ...")
+                    graficarIDDFS(resultado)
+            
+                else:
+                    print("No se encontraron resultados")
 
         if opcion == "4":
-            print("Gracias pelotudo :v\n")
+            print("Gracias :v\n")
             print("¡NO REGRESES!!!!!")
             break
 
