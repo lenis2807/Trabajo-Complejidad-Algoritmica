@@ -1,5 +1,5 @@
 # Proyecto de Complejidad Algoritmica
-**En constante trabajo**
+Parcial
 
 
 ## Autores y créditos
